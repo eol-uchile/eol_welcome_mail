@@ -24,11 +24,16 @@ def send_welcome_mail(user_email, subject, html_message, course_id, from_addr):
     """
     emails = [user_email]
     plain_message = strip_tags(html_message)
+
+    from_email = configuration_helpers.get_value(
+        'email_from_address',
+        settings.BULK_EMAIL_DEFAULT_FROM_EMAIL
+    )
     
     mail = send_mail(
         subject,
         plain_message,
-        from_addr,
+        from_email,
         emails,
         fail_silently=False,
         html_message=html_message)
